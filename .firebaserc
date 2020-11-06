@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "wallet-redux": {
+      "hosting": {
+        "wallet": [
+          "wallet-redux"
+        ]
+      }
+    }
+  }
+}

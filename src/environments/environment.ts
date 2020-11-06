@@ -3,9 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyBc2xksQF6T4PnsMr-ID5JDROLl1obe3Us',
+    authDomain: 'wallet-redux.firebaseapp.com',
+    databaseURL: 'https://wallet-redux.firebaseio.com',
+    projectId: 'wallet-redux',
+    storageBucket: 'wallet-redux.appspot.com',
+    messagingSenderId: '54776281053',
+    appId: '1:54776281053:web:5837e4bcf88adb025ce834',
+    measurementId: 'G-VDRHN0LNTW'
+  }
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
