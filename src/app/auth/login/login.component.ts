@@ -3,8 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Login } from '../../models/login.model';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertService } from '../../services/alert.service';
+import { Store } from '@ngrx/store';
+import { isLoading, stopLoading } from '../../shared/ui.actions';
+import { AppState } from '../../app.reducer';
 
 @Component({
   selector: 'app-login',
@@ -15,9 +17,9 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router,
-              private spinner: NgxSpinnerService, private alertService: AlertService) { }
-
+  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private alertService: AlertService,
+              private store: Store<AppState>) { }
+ 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.minLength(5), Validators.email]],
@@ -25,13 +27,13 @@ export class LoginComponent implements OnInit {
     });
   }
 
+
   onSubmit(): void {
     if (this.loginForm.invalid) {
       console.error('Login form invalid');
       return;
     }
-    this.spinner.show();
-
+    this.store.dispatch(isLoading());
     const login: Login = this.loginForm.value as Login;
     this.auth.login(login)
       .then(credentials => {
@@ -43,7 +45,7 @@ export class LoginComponent implements OnInit {
         this.alertService.error(error.message);
       })
       .finally(() => {
-        this.spinner.hide();
+        this.store.dispatch(stopLoading());
       });
   }
 
