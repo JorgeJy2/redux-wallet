@@ -15,7 +15,8 @@ import { setUser, unSetUser } from '../auth/auth.actions';
 })
 export class AuthService {
 
-  userSubscription: Subscription;
+  private userSubscription: Subscription;
+  private userLoad: User;
 
   constructor(private auth: AngularFireAuth, private fireStoreService: FireStoreService, private authStore: Store<AppState>) { }
 
@@ -24,15 +25,16 @@ export class AuthService {
       console.log(fUser);
       if (fUser) {
 
-        this.userSubscription =  this.fireStoreService.getInfoUser(fUser.uid)
+        this.userSubscription = this.fireStoreService.getInfoUser(fUser.uid)
           .subscribe((userData: User) => {
+            this.userLoad = userData;
             this.authStore.dispatch(setUser({ user: userData }));
           });
       } else {
         this.userSubscription.unsubscribe();
         this.authStore.dispatch(unSetUser());
+        this.userLoad = null;
       }
-
     });
   }
 
@@ -63,4 +65,9 @@ export class AuthService {
       map(fUser => fUser != null)
     );
   }
+
+  get user(): User {
+    return this.userLoad;
+  }
+
 }

@@ -15,4 +15,12 @@ export class AlertService {
       text: message
     });
   }
+
+  message(message: string, title: string = 'OK'): void {
+    Swal.fire({
+        icon: 'success',
+        title,
+        text: message
+      });
+  }
 }

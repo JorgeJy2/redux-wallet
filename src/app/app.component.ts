@@ -4,6 +4,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Subscription } from 'rxjs';
 import { AppState } from './app.reducer';
 import { AuthService } from './services/auth.service';
+import { filter } from 'rxjs/operators';
+import { unSetItems } from './entry-exit/entry-exit.actions';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +23,13 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.uiSubscription = this.store.select('ui').subscribe(({ isLoading }) => {
       isLoading ? this.spinner.show() : this.spinner.hide();
+    });
+
+    this.store.select('auth').pipe(
+      filter(({user}) =>  user === null)
+    ).subscribe(user => {
+      console.log('user ',user);
+      this.store.dispatch(unSetItems());
     });
   }
 
