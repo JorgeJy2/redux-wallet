@@ -6,11 +6,11 @@ import * as items from './entry-exit/entry-exit.reducer';
 export interface AppState {
     ui: ui.State,
     auth: auth.State,
-    entrysExits: items.State
+    // entrysExits: items.State
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
     ui: ui.uiReducer,
     auth: auth.authReducer,
-    entrysExits: items.entryExitReducer
+    // entrysExits: items.entryExitReducer
 }

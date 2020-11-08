@@ -6,6 +6,7 @@ import { TYPE_ENTRY_EXIT } from 'src/app/models/entry-exit.model';
 
 import { ChartType } from 'chart.js';
 import { MultiDataSet, Label } from 'ng2-charts';
+import { AppStateWithEntryExit } from '../entry-exit.reducer';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -25,7 +26,7 @@ export class StatisticsComponent implements OnInit, OnDestroy {
   public doughnutChartData: MultiDataSet = [];
 
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<AppStateWithEntryExit>) {
     this.itemsSubscription = this.store.select('entrysExits')
       .subscribe(({ items }) => {
 

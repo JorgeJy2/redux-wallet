@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { EntryExit } from '../../models/entry-exit.model';
 import { EntryExitService } from '../../services/entry-exit.service';
 import { isLoading, stopLoading } from '../../shared/ui.actions';
+import { AppStateWithEntryExit } from '../entry-exit.reducer';
 
 @Component({
   selector: 'app-details',
@@ -17,7 +18,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   items: EntryExit[] = [];
 
-  constructor(private store: Store<AppState>, private entryExitService: EntryExitService) { }
+  constructor(private store: Store<AppStateWithEntryExit>, private entryExitService: EntryExitService) { }
 
   ngOnInit(): void {
     this.movementsSubscription = this.store.select('entrysExits').subscribe(({ items }) => this.items = items);
